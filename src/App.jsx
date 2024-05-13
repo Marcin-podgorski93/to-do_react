@@ -10,6 +10,7 @@ function App() {
     { name: "Zaplacic rachunki", done: false, id: 1 },
     { name: "Wyrzucic smieci", done: true, id: 2 },
   ]);
+  console.log(todos);
 
   return (
     <div className={styles.container}>
@@ -30,9 +31,13 @@ function App() {
       {isFormShown && (
         <Form
           onFormSubmit={(newTodoName) => {
-            setTodos((prevTodos) => [
-              ...prevTodos,
-              { name: newTodoName, done: false, id: prevTodos.length + 1 },
+            setTodos((prevTodo) => [
+              ...prevTodo,
+              {
+                name: newTodoName,
+                done: false,
+                id: prevTodo.length > 0 ? prevTodo.at(-1).id + 1 : 0,
+              },
             ]);
             setIsFormShown(false);
           }}
@@ -40,7 +45,29 @@ function App() {
       )}
       <ul>
         {todos.map((todo) => (
-          <TodoItem key={todo.id} name={todo.name} done={todo.done} />
+          <TodoItem
+            key={todo.id}
+            name={todo.name}
+            done={todo.done}
+            onDeleteButton={() => {
+              setTodos((prevTodo) =>
+                prevTodo.filter((todos) => todos.id !== todo.id)
+              );
+            }}
+            onDoneButtonClick={() => {
+              setTodos((prevTodo) =>
+                prevTodo.map((todos) => {
+                  if (todos.id !== todo.id) {
+                    return todos;
+                  }
+                  return {
+                    ...todos,
+                    done: true,
+                  };
+                })
+              );
+            }}
+          />
         ))}
       </ul>
     </div>
