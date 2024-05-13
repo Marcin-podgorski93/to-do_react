@@ -1,11 +1,11 @@
 import { Button } from "../Button/Button";
 import styles from "./TodoItem.module.css";
 
-export function TodoItem() {
+export function TodoItem({ name, done }) {
   return (
     <li className={styles.item}>
-      <span className={styles.name}>Zaplac rachunki</span>
-      <Button>Zrobione</Button>
+      <span className={styles.name}>{name}</span>
+      {!done && <Button>Zrobione</Button>}
       <Button>Usuń</Button>
     </li>
   );

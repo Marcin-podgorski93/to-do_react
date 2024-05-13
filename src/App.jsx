@@ -3,6 +3,11 @@ import { Form } from "./components/Form/Form";
 import { TodoItem } from "./components/TodoItem/TodoItem";
 
 function App() {
+  const todos = [
+    { name: "Zaplacic rachunki", done: false, id: 1 },
+    { name: "Wyrzucic smieci", done: true, id: 2 },
+  ];
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -14,7 +19,9 @@ function App() {
       </header>
       <Form />
       <ul>
-        <TodoItem />
+        {todos.map((todo) => (
+          <TodoItem key={todo.id} name={todo.name} done={todo.done} />
+        ))}
       </ul>
     </div>
   );
